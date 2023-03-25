@@ -1,0 +1,15 @@
+{
+  "name": "trainit-api",
+  "version": "1.0.0",
+  "description": "Sistema backend de gestión de grupos de entrenamiento wellness",
+  "main": "app.js",
+  "type": "module",
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "express": "^4.18.2",
+    "mongodb": "^4.12.1",
+    "node-fetch": "^3.3.0",
+    "passport-local": "^1.0.0",
+    "uuid": "^9.0.0"
+  }
+}
