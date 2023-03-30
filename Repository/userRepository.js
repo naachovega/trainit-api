@@ -37,12 +37,12 @@ export default class UserRepository {
         return this.storage.getAllUsers()
     }
 
-    editInterests(socialMediaId, interests) {
-        return this.storage.editInterests(socialMediaId, interests)
+    editInterests(_id, interests) {
+        return this.storage.editInterests(_id, interests)
     }
 
-    editBio(socialMediaId, biography) {
-        return this.storage.editBio(socialMediaId, biography)
+    editBio(_id, biography) {
+        return this.storage.editBio(_id, biography)
     }
 
     getUserDetailInfo(socialMediaId) {
@@ -69,7 +69,19 @@ export default class UserRepository {
         return this.storage.getUserByEmail(email)
     }
 
-    getUserByObjId(_id){
+    getUserByObjId(_id) {
         return this.storage.getUserByObjId(_id)
+    }
+
+    deleteUser(_id) {
+        return this.storage.deleteUser(_id)
+    }
+
+    setUserAttendance(_id, attendance) {
+        return this.storage.setUserAttendance(_id, attendance)
+    }
+
+    setUserActivityDate(_id){
+        return this.storage.setUserActivityDate(_id)
     }
 }

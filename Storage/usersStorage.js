@@ -55,8 +55,6 @@ export default class UserStorage {
 
     async finalizeRegistration(_id, obj) {
 
-        console.log(_id, obj);
-
         return this.collection.updateOne(
             { _id: _id },
             {
@@ -73,9 +71,9 @@ export default class UserStorage {
     }
 
     //Future method to modify the users classes interests
-    async editInterests(socialMediaId, newInterests) {
+    async editInterests(_id, newInterests) {
         return await this.collection.updateOne(
-            { socialMediaId: socialMediaId },
+            { _id: _id },
             {
                 $set: {
                     interests: newInterests
@@ -88,9 +86,9 @@ export default class UserStorage {
         return await this.collection.find({}).toArray()
     }
 
-    async editBio(socialMediaId, biography) {
+    async editBio(_id, biography) {
         return await this.collection.updateOne(
-            { socialMediaId: socialMediaId },
+            { _id: _id },
             {
                 $set: {
                     bio: biography
@@ -142,5 +140,29 @@ export default class UserStorage {
 
     async getUserByObjId(_id) {
         return await this.collection.find({ _id: _id }).toArray()
+    }
+    async deleteUser(_id) {
+        return await this.collection.deleteOne({ _id: _id })
+    }
+
+    async setUserAttendance(_id, attendance) {
+        return this.collection.updateOne(
+            { _id: _id },
+            {
+                $set:
+                    { gymAttendanceMonthly: attendance + 1 }
+            }
+        )
+    }
+
+    async setUserActivityDate(_id) {
+        return this.collection.updateOne(
+            { _id: _id },
+            {
+                $set:
+                    { lastDayGym: new Date() }
+            }
+        )
+
     }
 }

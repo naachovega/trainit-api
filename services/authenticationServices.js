@@ -7,12 +7,6 @@ const googleUrlAuth = 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&ac
 
 const repository = new UserRepository()
 
-const generateRandomCredential = () => {
-    const credential = `${Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000}-${Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000}-${Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000}-${Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000}`
-    return credential
-
-}
-
 export const googleLogin = async (req, res) => {
     const { accessToken } = req.body
 
@@ -23,13 +17,15 @@ export const googleLogin = async (req, res) => {
             if (errors) {
                 if (errors.length > 0) {
                     return res.status(401).json({
-                        errorMessage: "No posee la autenticacion correcta para poder acceder a la cuenta de google que se envio"
+                        errorMessage: "No posee la autenticacion correcta para poder acceder a la cuenta de google que se envio",
+                        code: 401
                     })
                 }
             }
             const credential = `${Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000}-${Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000}-${Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000}-${Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000}`
-            console.log(credential);
+
             const defaultUser = new User(
+                undefined,
                 "", //name
                 "", //lastname
                 "", //birthdate
@@ -43,17 +39,19 @@ export const googleLogin = async (req, res) => {
             try {
                 const newUser = await repository.userAuthentication(defaultUser)
                 return res.status(201).json(newUser)
-                
+
             } catch (error) {
                 return res.status(500).json({
-                    errorMessage: "Hubo un error al buscar al usuario de google"
+                    errorMessage: "Hubo un error al buscar al usuario de google",
+                    code: 500
                 })
             }
         })
         .catch(err => {
             console.log(err)
             return res.status(500).json({
-                message: "Su usuario no es valido para registrase con google. Por favor, reintente mas tarde."
+                message: "There was a problem trying to sign in with Google. Please try again later.",
+                code: 500
             })
         })
 }

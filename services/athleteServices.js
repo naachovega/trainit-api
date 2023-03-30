@@ -38,10 +38,11 @@ export const getAnAthlete = async (req, res) => {
 }
 
 export const finalizeRegistrationAthlete = async (req, res) => {
-    const { _id, name, lastName, birthdate, interests, role } = req.body
+    const { _id, name, lastName, birthdate, interests } = req.body
+
 
     const objectToModify = {
-        tempRole: role,
+        tempRole: "Athlete",
         tempName: name,
         tempLastName: lastName,
         tempBirthdate: birthdate,

@@ -12,4 +12,8 @@ export default class CredentialRepository {
     getUserCredential(username) {
         return this.storage.getUsersCredential(username)
     }
+
+    deleteCredential(_id) {
+        return this.storage.deleteCredential(_id)
+    }
 }

@@ -23,11 +23,11 @@ export const getAllUsers = async (req, res) => {
 
 export const editInterests = async (req, res) => {
 
-    const { socialMediaId, interests } = req.body
+    const { _id, interests } = req.body
 
     try {
 
-        const edited = await repository.editInterests(socialMediaId, interests)
+        const edited = await repository.editInterests(_id, interests)
 
         if (edited.modifiedCount === 0) {
             return res.status(400).json({
@@ -35,7 +35,7 @@ export const editInterests = async (req, res) => {
             })
         }
 
-        const user = await repository.getUser(socialMediaId)
+        const user = await repository.getUserByObjId(_id)
 
         return res.status(200).json(user[0])
 
@@ -49,18 +49,19 @@ export const editInterests = async (req, res) => {
 }
 
 export const editBio = async (req, res) => {
-    const { socialMediaId, biography } = req.body
+    const { _id, biography } = req.body
 
     try {
-        const edited = await repository.editBio(socialMediaId, biography)
+        const edited = await repository.editBio(_id, biography)
 
         if (edited.matchedCount === 0) {
             return res.stats(400).json({
                 message: "The biography coulnd't be updated"
             })
         }
-        const user = await repository.getUser(socialMediaId)
+        const user = await repository.getUserByObjId(_id)
 
+        
         return res.status(200).json(user[0])
 
     } catch (err) {

@@ -14,4 +14,8 @@ export default class CredentialStorage {
     async getUsersCredential(username) {
         return await this.collection.find({ username: username }).toArray()
     }
+
+    async deleteCredential(_id) {
+        return await this.collection.deleteOne({ _id: _id })
+    }
 }

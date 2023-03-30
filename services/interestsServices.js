@@ -4,10 +4,13 @@ const repository = new InterestsRepository()
 
 export const getInterests = async (req, res) => {
     try {
+        
         const interests = await repository.getInterests()
 
-        return interests.length ?
-            res.status(200).json(interests)
+        const result = interests.map(v => v.Description)
+
+        return result.length ?
+            res.status(200).json(result)
             :
             res.status(204).json({
                 message: "There arent any interests loaded."

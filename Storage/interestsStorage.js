@@ -7,10 +7,10 @@ export default class InterestsStorage {
     }
 
     async getInterests() {
-        return await this.collection.find({}).toArray()
+        return await this.collection.find({}, { projection: { Description: 1, _id: 0 } }).toArray()
     }
 
-    async createInterests(interests){
+    async createInterests(interests) {
         return await this.collection.insertMany(interests)
     }
 }
