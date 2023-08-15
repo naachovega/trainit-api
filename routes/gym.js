@@ -1,5 +1,6 @@
 import express from "express";
 import Gym from "../models/gym.js";
+import GymRepository from "../Repository/gymRepository.js";
 import UserRepository from "../Repository/userRepository.js";
 
 const {
@@ -8,29 +9,49 @@ const {
 
 
 const userRepo = new UserRepository()
-
+const gymRepo = new GymRepository()
 const router = express.Router()
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
 
-    const { name, price, location } = req.body
+    const { name, price, location, openedDays } = req.body
 
     const randomString = randomBytes(10).toString('hex').toUpperCase()
 
-    const gym = new Gym(name, price, location, randomString)
+    const gym = new Gym(name, price, location, randomString, openedDays)
 
-    //aca llamo al repository y lo guardo en la base...
 
-    return res.status(200).json({ gym: gym })
+    try {
+        await gymRepo.createGym(gym)
+        return res.status(200).json({ gym: gym })
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error,
+            code: 500
+        })
+    }
 
 })
+
+router.get('/', async (req, res) => {
+    try {
+        const gyms = await gymRepo.getAllGyms()
+        return res.status(200).json(gyms)
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error,
+            code: 500
+        })
+    }
+})
+
 
 router.post("/entrance/", async (req, res) => {
 
     try {
         const { _id, gymToken } = req.body
-
-        console.log(req.body);
 
         //previa validacion del usuario, del gym, y que el usuario este registrado en ese gym
 

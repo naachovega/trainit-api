@@ -16,6 +16,10 @@ export default class User {
         this.gymMemberships = []
         this.lastDayGym = new Date()
         this.gymAttendanceMonthly = 0
+        this.monthlyGoalAttendance = 0
+        this.weeklyGoalAttendance = 0
+        this.gymAttendanceWeekly = 0
         this.credential = credential
+        this.routine = []
     }
 }
