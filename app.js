@@ -13,7 +13,7 @@ const port = 3000
 const defaultEndpoint = "/api"
 
 app.use(express.json())
-
+ 
 app.use(`${defaultEndpoint}/athlete`, athlete)
 app.use(`${defaultEndpoint}/auth`, authentication)
 app.use(`${defaultEndpoint}/user`, user)
